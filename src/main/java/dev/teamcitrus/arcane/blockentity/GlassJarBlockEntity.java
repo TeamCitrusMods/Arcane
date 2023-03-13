@@ -1,11 +1,8 @@
 package dev.teamcitrus.arcane.blockentity;
 
-import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
-import dev.teamcitrus.arcane.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 
 public class GlassJarBlockEntity extends BlockEntity {
-    public static final ItemStackHandler inventory = new ItemStackHandler(3) {
+    private final ItemStackHandler inventory = new ItemStackHandler(3) {
         @Override
         protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
             return 1;
@@ -87,16 +84,6 @@ public class GlassJarBlockEntity extends BlockEntity {
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this, BlockEntity::getUpdateTag);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        super.onDataPacket(net, packet);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        return super.saveWithoutMetadata();
     }
 
     public void dropItem(ItemStack stack, float offsetY) {
