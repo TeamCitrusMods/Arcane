@@ -70,9 +70,9 @@ public class GlassJarBlock extends Block implements EntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         for(Direction direction : context.getNearestLookingDirections()) {
             if (direction.getAxis() == Direction.Axis.Y) {
-                BlockState blockstate = this.defaultBlockState().setValue(HANGING, Boolean.valueOf(direction == Direction.UP));
+                BlockState blockstate = this.defaultBlockState();
                 if (blockstate.canSurvive(context.getLevel(), context.getClickedPos())) {
-
+                    return blockstate.setValue(HANGING, direction == Direction.UP);
                 }
             }
         }
