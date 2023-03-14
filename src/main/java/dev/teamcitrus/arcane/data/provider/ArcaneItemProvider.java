@@ -2,13 +2,13 @@ package dev.teamcitrus.arcane.data.provider;
 
 import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.registry.ModItems;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ArcaneItemProvider extends ItemModelProvider {
-    public ArcaneItemProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, ArcaneMod.MODID, existingFileHelper);
+    public ArcaneItemProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, ArcaneMod.MODID, existingFileHelper);
     }
 
     @Override

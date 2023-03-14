@@ -1,9 +1,9 @@
 package dev.teamcitrus.arcane.data;
 
 import dev.teamcitrus.arcane.ArcaneMod;
-import dev.teamcitrus.arcane.data.provider.ArcaneBlockStateProvider;
 import dev.teamcitrus.arcane.data.provider.ArcaneItemProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,8 +16,8 @@ public class ArcaneData {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper file = event.getExistingFileHelper();
+        PackOutput output = gen.getPackOutput();
 
-        gen.addProvider(true, new ArcaneBlockStateProvider(gen, file));
-        gen.addProvider(true, new ArcaneItemProvider(gen, file));
+        gen.addProvider(event.includeClient(), new ArcaneItemProvider(output, file));
     }
 }
