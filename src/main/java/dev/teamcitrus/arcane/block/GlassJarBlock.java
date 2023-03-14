@@ -28,8 +28,8 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         if (!level.isClientSide) {
-            if (!player.getItemInHand(hand).isEmpty() && level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
-                return jar.use(level, pos, state, player, hand, player.getItemInHand(hand), hitResult);
+            if (level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
+                return jar.use(level, pos, state, player, hand, player.getItemInHand(hand));
             }
         }
 
@@ -40,7 +40,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean p_60519_) {
         if(!level.isClientSide) {
             if(level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
-                jar.onBreak(level, pos);
+                jar.onBreak();
             }
         }
 

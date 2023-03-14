@@ -1,6 +1,7 @@
 package dev.teamcitrus.arcane.blockentity;
 
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
+import dev.teamcitrus.arcane.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -39,27 +39,39 @@ public class GlassJarBlockEntity extends BlockEntity {
         this(ModBlockEntities.GLASS_JAR.get(), pos, state);
     }
 
-    public InteractionResult use(Level levelAccessor, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem, BlockHitResult hit) {
-        if(hand == InteractionHand.MAIN_HAND) {
-            if(!heldItem.isEmpty() && !player.isCrouching()) {
+    public InteractionResult use(Level levelAccessor, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (!heldItem.isEmpty() && !player.isCrouching()) {
                 ItemStack heldCopy = heldItem.copy();
                 heldCopy.setCount(1);
                 ItemStack restStack = ItemHandlerHelper.insertItem(inventory, heldCopy, false);
-                if(restStack.isEmpty()) {
+                if (restStack.isEmpty()) {
                     heldItem.shrink(1);
                     setChanged(levelAccessor, pos, state);
                     levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
                     return InteractionResult.SUCCESS;
                 }
-            } else {
-                //Do other stuff here in a bit
+            } else if (player.isCrouching() && heldItem.isEmpty()) {
+                if (!BlockUtil.isEmpty(inventory)) {
+                    ItemStack lastStack = BlockUtil.getLastStackInBlock(inventory);
+                    if (!lastStack.isEmpty()) {
+                        dropItem(lastStack, 1F);
+                        lastStack.shrink(1);
+                    }
+                    setChanged();
+                    levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
         return InteractionResult.PASS;
     }
 
-    public void onBreak(Level level, BlockPos pos) {
-        dropAllItems(level, pos);
+    public void onBreak() {
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            ItemStack stack = inventory.getStackInSlot(i);
+            dropItem(stack, 0F);
+        }
         setRemoved();
     }
 
@@ -89,15 +101,8 @@ public class GlassJarBlockEntity extends BlockEntity {
     public void dropItem(ItemStack stack, float offsetY) {
         ItemStack copyStack = stack.copy();
         BlockPos pos = getBlockPos();
-        ItemEntity itementity = new ItemEntity(this.level, pos.getX(), pos.getY() + (double) offsetY, this.worldPosition.getZ(), copyStack);
+        ItemEntity itementity = new ItemEntity(this.level, pos.getX() + 0.5, pos.getY() + offsetY, pos.getZ() + 0.5, copyStack);
         itementity.setDefaultPickUpDelay();
         this.level.addFreshEntity(itementity);
-    }
-
-    private void dropAllItems(Level levelAccessor, BlockPos pos) {
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            ItemStack stack = inventory.getStackInSlot(i);
-            dropItem(stack, 0F);
-        }
     }
 }
