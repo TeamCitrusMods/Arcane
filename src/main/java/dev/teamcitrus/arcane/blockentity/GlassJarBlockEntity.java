@@ -1,7 +1,7 @@
 package dev.teamcitrus.arcane.blockentity;
 
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
-import dev.teamcitrus.arcane.util.BlockUtil;
+import dev.teamcitrus.arcane.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -52,8 +52,8 @@ public class GlassJarBlockEntity extends BlockEntity {
                     return InteractionResult.SUCCESS;
                 }
             } else if (player.isCrouching() && heldItem.isEmpty()) {
-                if (!BlockUtil.isEmpty(inventory)) {
-                    ItemStack lastStack = BlockUtil.getLastStackInBlock(inventory);
+                if (!InventoryUtil.isEmpty(inventory)) {
+                    ItemStack lastStack = InventoryUtil.getLastStack(inventory);
                     if (!lastStack.isEmpty()) {
                         dropItem(lastStack, 1F);
                         lastStack.shrink(1);
