@@ -2,7 +2,7 @@ package dev.teamcitrus.arcane.registry;
 
 import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.capability.mana.IManaCapability;
-import dev.teamcitrus.arcane.capability.mana.ManaProvider;
+import dev.teamcitrus.arcane.capability.mana.ManaCapability;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +26,7 @@ public class ModCapabilities {
     @SubscribeEvent
     public static void attachCaps(AttachCapabilitiesEvent<Entity> event) {
         if(event.getObject() instanceof Player) {
-            event.addCapability(new ResourceLocation(ArcaneMod.MODID, "mana"), new ManaProvider());
+            event.addCapability(new ResourceLocation(ArcaneMod.MODID, "mana"), new ManaCapability.ManaProvider());
         }
     }
 }
