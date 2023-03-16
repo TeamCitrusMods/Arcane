@@ -1,7 +1,6 @@
 package dev.teamcitrus.arcane.data.provider;
 
 import com.klikli_dev.modonomicon.api.ModonomiconAPI;
-import com.klikli_dev.modonomicon.api.datagen.BookLangHelper;
 import com.klikli_dev.modonomicon.api.datagen.BookProvider;
 import com.klikli_dev.modonomicon.api.datagen.book.BookModel;
 import dev.teamcitrus.arcane.ArcaneMod;
@@ -15,19 +14,22 @@ public class ArcaneBookProvider extends BookProvider {
     }
 
     private BookModel makeBook(String bookName) {
-        BookLangHelper helper = ModonomiconAPI.get().getLangHelper(this.modid);
+        //The lang helper keeps track of the "DescriptionIds", that is, the language keys for translations, for us
+        var helper = ModonomiconAPI.get().getLangHelper(this.modid);
+
+        //we tell the helper the book we're in.
         helper.book(bookName);
 
-        BookModel book = BookModel.builder()
-                .withId(this.modLoc(bookName))
-                .withName(helper.bookName())
-                .withTooltip(helper.bookTooltip())
-                .withGenerateBookItem(true)
-                .withModel(new ResourceLocation("modonomicon:modonomicon_red"))
-                .withCreativeTab("modonomicon")
+        //Now we create the book with settings of our choosing
+        var demoBook = BookModel.builder()
+                .withId(this.modLoc(bookName)) //the id of the book. modLoc() prepends the mod id.
+                .withName(helper.bookName()) //the name of the book. The lang helper gives us the correct translation key.
+                .withTooltip(helper.bookTooltip()) //the hover tooltip for the book. Again we get a translation key.
+                .withGenerateBookItem(true) //auto-generate a book item for us.
+                .withModel(new ResourceLocation("modonomicon:modonomicon_red")) //use the default red modonomicon icon for the book
+                .withCreativeTab(new ResourceLocation(ModonomiconAPI.ID, "modonomicon")) //and put it in the modonomicon tab
                 .build();
-
-        return book;
+        return demoBook;
     }
 
     @Override

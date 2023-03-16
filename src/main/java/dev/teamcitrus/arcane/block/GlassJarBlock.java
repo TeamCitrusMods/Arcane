@@ -14,6 +14,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -98,5 +99,10 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter getter, BlockPos pos, PathComputationType path) {
         return false;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_60550_) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 }

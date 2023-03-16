@@ -1,5 +1,6 @@
 package dev.teamcitrus.arcane.blockentity;
 
+import dev.teamcitrus.arcane.block.GlassJarBlock;
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
 import dev.teamcitrus.arcane.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
@@ -19,10 +20,17 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
 
-public class GlassJarBlockEntity extends BlockEntity {
+public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final ItemStackHandler inventory = new ItemStackHandler(3) {
         @Override
         protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
@@ -30,6 +38,11 @@ public class GlassJarBlockEntity extends BlockEntity {
         }
     };
     private final LazyOptional<IItemHandler> inventoryHolder = LazyOptional.of(() -> inventory);
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    private static final RawAnimation SWING_ANIMATION = RawAnimation.begin().thenLoop("animation.jar.swing");
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.jar.idle");
 
     public GlassJarBlockEntity(BlockEntityType<?> blockEntity, BlockPos pos, BlockState state) {
         super(blockEntity, pos, state);
@@ -96,6 +109,22 @@ public class GlassJarBlockEntity extends BlockEntity {
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this, BlockEntity::getUpdateTag);
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, state -> {
+            if(getLevel().getBlockState(getBlockPos()).getValue(GlassJarBlock.HANGING)) {
+                return state.setAndContinue(SWING_ANIMATION);
+            } else {
+                return state.setAndContinue(IDLE);
+            }
+        }));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
     }
 
     public void dropItem(ItemStack stack, float offsetY) {

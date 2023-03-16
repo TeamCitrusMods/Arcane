@@ -1,0 +1,38 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.jar.swing": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"0.0": {
+							"vector": [2.5, 0, 0]
+						},
+						"1.0": {
+							"vector": [-2.5, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"2.0": {
+							"vector": [2.5, 0, 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				}
+			}
+		},
+		"animation.jar.idle": {
+			"animation_length": 0.5,
+			"bones": {
+				"bb_main": {
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.5": [0, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

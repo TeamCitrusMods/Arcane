@@ -91,8 +91,8 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.19.3-44.1.23'
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19.3:4.0.4')
-    compileOnly fg.deobf("com.klikli_dev:modonomicon:1.19.3-1.27.0")
-    runtimeOnly fg.deobf("com.klikli_dev:modonomicon:1.19.3-1.27.0")
+    compileOnly fg.deobf("com.klikli_dev:modonomicon:1.19.3-1.29.1")
+    runtimeOnly fg.deobf("com.klikli_dev:modonomicon:1.19.3-1.29.1")
 }
 
 

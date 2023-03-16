@@ -1,7 +1,6 @@
 package dev.teamcitrus.arcane;
 
 import com.mojang.logging.LogUtils;
-import dev.teamcitrus.arcane.data.ArcaneData;
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
 import dev.teamcitrus.arcane.registry.ModBlocks;
 import dev.teamcitrus.arcane.registry.ModItems;
@@ -20,7 +19,6 @@ public class ArcaneMod {
     public ArcaneMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::commonSetup);
-        bus.addListener(ArcaneData::gatherData);
 
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
