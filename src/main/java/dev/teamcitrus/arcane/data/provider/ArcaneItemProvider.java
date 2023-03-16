@@ -13,6 +13,7 @@ public class ArcaneItemProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        basicItem(ModItems.CORK.get());
         basicItem(ModItems.BLACK_PEPPER.get());
         basicItem(ModItems.CINNAMON.get());
         basicItem(ModItems.HIMALAYAN_SALT.get());

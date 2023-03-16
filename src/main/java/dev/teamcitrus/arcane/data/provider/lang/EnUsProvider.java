@@ -6,7 +6,6 @@ import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.registry.ModBlocks;
 import dev.teamcitrus.arcane.registry.ModItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class EnUsProvider extends LanguageProvider {
@@ -19,6 +18,7 @@ public class EnUsProvider extends LanguageProvider {
     }
 
     private void addItems() {
+        add(ModItems.CORK.get(), "Cork");
         add(ModItems.ROSE_QUARTZ.get(), "Rose Quartz");
         add(ModItems.SELENITE.get(), "Selenite");
         add(ModItems.TIGERS_EYE.get(), "Tigers Eye");
@@ -42,8 +42,8 @@ public class EnUsProvider extends LanguageProvider {
     private void addBook() {
         BookLangHelper helper = ModonomiconAPI.get().getLangHelper(ArcaneMod.MODID);
         helper.book(ArcaneMod.MODID);
-        this.add(helper.bookName(), "Arcane Book");
-        this.add(helper.bookTooltip(), "[WIP]");
+        this.add(helper.bookName(), "The Journal");
+        this.add(helper.bookTooltip(), "1st Edition");
     }
 
     @Override

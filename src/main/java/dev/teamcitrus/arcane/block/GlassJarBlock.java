@@ -1,6 +1,8 @@
 package dev.teamcitrus.arcane.block;
 
+import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.blockentity.GlassJarBlockEntity;
+import dev.teamcitrus.arcane.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -21,16 +23,27 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GlassJarBlock extends Block implements EntityBlock {
+    public static final BooleanProperty CORKED = BooleanProperty.create("corked");
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
+    public static final BooleanProperty SEALED = BooleanProperty.create("sealed");
+
+    private static final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 14, 13);
 
     public GlassJarBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(HANGING, false));
+        this.registerDefaultState(this.getStateDefinition().any()
+                .setValue(CORKED, false)
+                .setValue(HANGING, false)
+                .setValue(SEALED, false)
+        );
     }
 
     @Nullable
@@ -78,7 +91,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HANGING);
+        builder.add(CORKED, HANGING, SEALED);
     }
 
     @Override
@@ -104,5 +117,10 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState p_60550_) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+        return SHAPE;
     }
 }

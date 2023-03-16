@@ -12,6 +12,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> GLASS_JAR_ITEM = ITEMS.register("glass_jar", () -> new BlockItem(ModBlocks.GLASS_JAR.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> CORK = ITEMS.register("cork", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ROSE_QUARTZ = ITEMS.register("rose_quartz", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SELENITE = ITEMS.register("selenite", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> TIGERS_EYE = ITEMS.register("tigers_eye", () -> new Item(new Item.Properties()));

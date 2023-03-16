@@ -1,7 +1,9 @@
 package dev.teamcitrus.arcane.blockentity;
 
+import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.block.GlassJarBlock;
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
+import dev.teamcitrus.arcane.registry.ModItems;
 import dev.teamcitrus.arcane.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +23,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -54,15 +55,52 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public InteractionResult use(Level levelAccessor, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!heldItem.isEmpty() && !player.isCrouching()) {
+            if (!player.isCrouching()) {
+                if (!heldItem.isEmpty()) {
+                    ItemStack heldCopy = heldItem.copy();
+                    heldCopy.setCount(1);
+                    ItemStack restStack = ItemHandlerHelper.insertItem(inventory, heldCopy, false);
+                    if (restStack.isEmpty()) {
+                        heldItem.shrink(1);
+                        setChanged();
+                        levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+            } else {
+                ArcaneMod.LOGGER.info(String.valueOf(heldItem.getItem().equals(ModItems.CORK.get())));
+                if (heldItem.isEmpty()) {
+                    if (!InventoryUtil.isEmpty(inventory)) {
+                        ItemStack lastStack = InventoryUtil.getLastStack(inventory);
+                        if (!lastStack.isEmpty()) {
+                            dropItem(lastStack, 1F);
+                            lastStack.shrink(1);
+                        }
+                        setChanged();
+                        levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
+                        return InteractionResult.SUCCESS;
+                    }
+                } else if (heldItem.getItem().equals(ModItems.CORK.get())) {
+                    ArcaneMod.LOGGER.warn("1");
+                }
+            }
+
+            /*
+            if (!player.isCrouching() && !heldItem.isEmpty()) {
                 ItemStack heldCopy = heldItem.copy();
                 heldCopy.setCount(1);
                 ItemStack restStack = ItemHandlerHelper.insertItem(inventory, heldCopy, false);
                 if (restStack.isEmpty()) {
                     heldItem.shrink(1);
-                    setChanged(levelAccessor, pos, state);
+                    setChanged();
                     levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
                     return InteractionResult.SUCCESS;
+                }
+            } else if (player.isCrouching()) {
+                ArcaneMod.LOGGER.warn("1");
+                ArcaneMod.LOGGER.warn(heldItem.getItem().toString());
+                if(heldItem.getItem() == ModItems.CORK.get()) {
+                    ArcaneMod.LOGGER.warn("2");
                 }
             } else if (player.isCrouching() && heldItem.isEmpty()) {
                 if (!InventoryUtil.isEmpty(inventory)) {
@@ -76,6 +114,8 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
                     return InteractionResult.SUCCESS;
                 }
             }
+
+             */
         }
         return InteractionResult.PASS;
     }
@@ -114,7 +154,7 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, state -> {
-            if(getLevel().getBlockState(getBlockPos()).getValue(GlassJarBlock.HANGING)) {
+            if(getLevel().getBlockState(getBlockPos()).getBlock() instanceof GlassJarBlock && getLevel().getBlockState(getBlockPos()).getValue(GlassJarBlock.HANGING)) {
                 return state.setAndContinue(SWING_ANIMATION);
             } else {
                 return state.setAndContinue(IDLE);
