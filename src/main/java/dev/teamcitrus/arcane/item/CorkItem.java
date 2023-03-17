@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class CorkItem extends Item {
@@ -24,8 +25,8 @@ public class CorkItem extends Item {
         if(!level.isClientSide()) {
             if(player.isCrouching() && level.getBlockState(pos).getBlock() instanceof GlassJarBlock) {
                 if(!level.getBlockState(pos).getValue(GlassJarBlock.CORKED)) {
-                    ArcaneMod.LOGGER.info("A");
-                    level.getBlockState(pos).setValue(GlassJarBlock.CORKED, true);
+                    BlockState state = level.getBlockState(pos).setValue(GlassJarBlock.CORKED, true);
+                    level.setBlockAndUpdate(pos, state);
                     return InteractionResult.SUCCESS;
                 }
             }

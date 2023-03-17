@@ -53,64 +53,34 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public InteractionResult use(Level levelAccessor, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!player.isCrouching()) {
-                if (!heldItem.isEmpty()) {
-                    ItemStack heldCopy = heldItem.copy();
-                    heldCopy.setCount(1);
-                    ItemStack restStack = ItemHandlerHelper.insertItem(inventory, heldCopy, false);
-                    if (restStack.isEmpty()) {
-                        heldItem.shrink(1);
-                        setChanged();
-                        levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-            } else {
-                if (heldItem.isEmpty()) {
-                    if (!InventoryUtil.isEmpty(inventory)) {
-                        ItemStack lastStack = InventoryUtil.getLastStack(inventory);
-                        if (!lastStack.isEmpty()) {
-                            dropItem(lastStack, 1F);
-                            lastStack.shrink(1);
+            if (!state.getValue(GlassJarBlock.CORKED)) {
+                if (!player.isCrouching()) {
+                    if (!heldItem.isEmpty()) {
+                        ItemStack heldCopy = heldItem.copy();
+                        heldCopy.setCount(1);
+                        ItemStack restStack = ItemHandlerHelper.insertItem(inventory, heldCopy, false);
+                        if (restStack.isEmpty()) {
+                            heldItem.shrink(1);
+                            setChanged();
+                            levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
+                            return InteractionResult.SUCCESS;
                         }
-                        setChanged();
-                        levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
-                        return InteractionResult.SUCCESS;
+                    }
+                } else {
+                    if (heldItem.isEmpty()) {
+                        if (!InventoryUtil.isEmpty(inventory)) {
+                            ItemStack lastStack = InventoryUtil.getLastStack(inventory);
+                            if (!lastStack.isEmpty()) {
+                                dropItem(lastStack, 1F);
+                                lastStack.shrink(1);
+                            }
+                            setChanged();
+                            levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
+                            return InteractionResult.SUCCESS;
+                        }
                     }
                 }
             }
-
-            /*
-            if (!player.isCrouching() && !heldItem.isEmpty()) {
-                ItemStack heldCopy = heldItem.copy();
-                heldCopy.setCount(1);
-                ItemStack restStack = ItemHandlerHelper.insertItem(inventory, heldCopy, false);
-                if (restStack.isEmpty()) {
-                    heldItem.shrink(1);
-                    setChanged();
-                    levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
-                    return InteractionResult.SUCCESS;
-                }
-            } else if (player.isCrouching()) {
-                ArcaneMod.LOGGER.warn("1");
-                ArcaneMod.LOGGER.warn(heldItem.getItem().toString());
-                if(heldItem.getItem() == ModItems.CORK.get()) {
-                    ArcaneMod.LOGGER.warn("2");
-                }
-            } else if (player.isCrouching() && heldItem.isEmpty()) {
-                if (!InventoryUtil.isEmpty(inventory)) {
-                    ItemStack lastStack = InventoryUtil.getLastStack(inventory);
-                    if (!lastStack.isEmpty()) {
-                        dropItem(lastStack, 1F);
-                        lastStack.shrink(1);
-                    }
-                    setChanged();
-                    levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
-                    return InteractionResult.SUCCESS;
-                }
-            }
-
-             */
         }
         return InteractionResult.PASS;
     }
