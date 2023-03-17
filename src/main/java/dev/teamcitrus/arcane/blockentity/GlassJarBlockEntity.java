@@ -1,9 +1,7 @@
 package dev.teamcitrus.arcane.blockentity;
 
-import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.block.GlassJarBlock;
 import dev.teamcitrus.arcane.registry.ModBlockEntities;
-import dev.teamcitrus.arcane.registry.ModItems;
 import dev.teamcitrus.arcane.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -68,7 +66,6 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
                     }
                 }
             } else {
-                ArcaneMod.LOGGER.info(String.valueOf(heldItem.getItem().equals(ModItems.CORK.get())));
                 if (heldItem.isEmpty()) {
                     if (!InventoryUtil.isEmpty(inventory)) {
                         ItemStack lastStack = InventoryUtil.getLastStack(inventory);
@@ -80,8 +77,6 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
                         levelAccessor.sendBlockUpdated(getBlockPos(), state, levelAccessor.getBlockState(pos), 3);
                         return InteractionResult.SUCCESS;
                     }
-                } else if (heldItem.getItem().equals(ModItems.CORK.get())) {
-                    ArcaneMod.LOGGER.warn("1");
                 }
             }
 
