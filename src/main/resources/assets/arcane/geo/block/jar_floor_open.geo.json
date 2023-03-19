@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "bb_main",
+					"name": "jar_supported_open",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{

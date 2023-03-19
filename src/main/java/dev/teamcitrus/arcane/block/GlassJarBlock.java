@@ -5,9 +5,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,6 +33,8 @@ import org.jetbrains.annotations.Nullable;
 public class GlassJarBlock extends Block implements EntityBlock {
     public static final BooleanProperty CORKED = BooleanProperty.create("corked");
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
+    public static final BooleanProperty HAS_CANDLE = BooleanProperty.create("has_candle");
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final BooleanProperty SEALED = BooleanProperty.create("sealed");
 
     private static final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 14, 13);
@@ -42,6 +44,8 @@ public class GlassJarBlock extends Block implements EntityBlock {
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(CORKED, false)
                 .setValue(HANGING, false)
+                .setValue(HAS_CANDLE, false)
+                .setValue(LIT, false)
                 .setValue(SEALED, false)
         );
     }
@@ -56,7 +60,17 @@ public class GlassJarBlock extends Block implements EntityBlock {
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
-                return jar.use(level, pos, state, player, hand, player.getItemInHand(hand));
+                if(!(player.getItemInHand(hand).getItem() == Items.CANDLE)) {
+                    return jar.use(level, pos, state, player, hand, player.getItemInHand(hand));
+                } else {
+                    if(state.getValue(CORKED)) {
+                        ItemStack stack = player.getItemInHand(hand);
+                        if (!player.isCreative()) {
+                            stack.shrink(1);
+                        }
+                        level.setBlockAndUpdate(pos, state.setValue(HAS_CANDLE, true));
+                    }
+                }
             }
         }
 
@@ -91,7 +105,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(CORKED, HANGING, SEALED);
+        builder.add(CORKED, HANGING, HAS_CANDLE, LIT, SEALED);
     }
 
     @Override
@@ -127,8 +141,15 @@ public class GlassJarBlock extends Block implements EntityBlock {
         return SHAPE;
     }
 
+    /*
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+        if(!level.isClientSide()) {
+            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            level.setBlockAndUpdate(pos.below(), ModBlocks.GLASS_JAR.get().defaultBlockState().setValue(HANGING, true));
+        }
         super.setPlacedBy(level, pos, state, entity, stack);
     }
+
+     */
 }

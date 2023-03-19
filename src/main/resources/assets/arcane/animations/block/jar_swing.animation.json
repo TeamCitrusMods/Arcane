@@ -1,26 +1,27 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.jar.swing": {
+		"animation.jar_hanging.swinging": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"bone": {
+				"main_body": {
 					"rotation": {
 						"0.0": {
-							"vector": [2.5, 0, 0]
+							"vector": [5, 0, 0]
 						},
 						"1.0": {
-							"vector": [-2.5, 0, 0],
+							"vector": [-5, 0, 0],
 							"easing": "easeInOutSine"
 						},
 						"2.0": {
-							"vector": [2.5, 0, 0],
+							"vector": [5, 0, 0],
 							"easing": "easeInOutSine"
 						}
 					}
 				}
-			}
+			},
+			"particle_effects": {}
 		},
 		"animation.jar.idle": {
 			"animation_length": 0.5,
@@ -33,6 +34,5 @@
 				}
 			}
 		}
-	},
-	"geckolib_format_version": 2
+	}
 }

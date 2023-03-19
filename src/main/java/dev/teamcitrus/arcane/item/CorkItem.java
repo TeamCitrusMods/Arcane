@@ -1,6 +1,5 @@
 package dev.teamcitrus.arcane.item;
 
-import dev.teamcitrus.arcane.ArcaneMod;
 import dev.teamcitrus.arcane.block.GlassJarBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
