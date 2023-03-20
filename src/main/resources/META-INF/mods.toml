@@ -4,22 +4,22 @@ license="MIT"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/"
 
 [[mods]]
-modId="arcane"
-version="1.0.0-alpha"
-displayName="Arcane"
+modId="concordiaarcana"
+version="0.0.1-alpha"
+displayName="Concordia Arcana"
 logoFile="arcane.png"
 authors="ZestyBlaze, Elysia"
 credits="Thank you to Clover for helping us to make this mod as realistic as possible!"
 description='''
 Development Magic Mod
 '''
-[[dependencies.arcane]]
+[[dependencies.concordiaarcana]]
     modId="forge"
     mandatory=true
     versionRange="[44,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.arcane]]
+[[dependencies.concordiaarcana]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.19.3,1.20)"

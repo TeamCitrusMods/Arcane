@@ -1,0 +1,24 @@
+{
+  "credit": "Made by ElysiaSilly :D, Praise the Axolotl!",
+  "parent": "builtin/entity",
+  "gui_light": "front",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        -5,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  }
+}

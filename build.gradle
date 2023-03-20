@@ -4,9 +4,9 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '1.0.0'
-group = 'dev.teamcitrus.arcane'
-archivesBaseName = 'arcane'
+version = '0.0.2'
+group = 'dev.teamcitrus.concordiaarcana'
+archivesBaseName = 'concordiaarcana'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -70,7 +70,7 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'arcane', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'concordiaarcana', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
                 examplemod {

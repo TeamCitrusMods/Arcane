@@ -1,0 +1,82 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "bb_main",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-2, 31, -2],
+							"size": [4, 2, 4],
+							"uv": {
+								"north": {"uv": [9.5, 7.5], "uv_size": [1, 0.5]},
+								"east": {"uv": [9.5, 7.5], "uv_size": [1, 0.5]},
+								"south": {"uv": [9.5, 7.5], "uv_size": [1, 0.5]},
+								"west": {"uv": [9.5, 7.5], "uv_size": [1, 0.5]},
+								"up": {"uv": [10.5, 7.25], "uv_size": [-1, -1]},
+								"down": {"uv": [10.5, 7.25], "uv_size": [-1, -1]}
+							}
+						}
+					]
+				},
+				{
+					"name": "body",
+					"pivot": [0, 31, 0],
+					"cubes": [
+						{
+							"origin": [-5, 0, -5],
+							"size": [10, 2, 10],
+							"uv": {
+								"north": {"uv": [8, 5.5], "uv_size": [2.5, 0.5]},
+								"east": {"uv": [8, 5.5], "uv_size": [2.5, 0.5]},
+								"south": {"uv": [8, 5.5], "uv_size": [2.5, 0.5]},
+								"west": {"uv": [8, 5.5], "uv_size": [2.5, 0.5]},
+								"up": {"uv": [8, 2.75], "uv_size": [2.5, 2.5]},
+								"down": {"uv": [8, 5.25], "uv_size": [2.5, -2.5]}
+							}
+						},
+						{
+							"origin": [-5, 2, -5],
+							"size": [10, 12, 10],
+							"uv": {
+								"north": {"uv": [10.75, 0], "uv_size": [2.5, 3]},
+								"east": {"uv": [10.75, 0], "uv_size": [2.5, 3]},
+								"south": {"uv": [10.75, 0], "uv_size": [2.5, 3]},
+								"west": {"uv": [10.75, 0], "uv_size": [2.5, 3]},
+								"up": {"uv": [10.75, 3.25], "uv_size": [2.5, 2.5]}
+							}
+						},
+						{
+							"origin": [0, 14, -6],
+							"size": [0, 18, 12],
+							"pivot": [0, 23, 0],
+							"rotation": [0, -45, 0],
+							"uv": {
+								"east": {"uv": [4.25, 0.25], "uv_size": [2.5, 4.5]}
+							}
+						},
+						{
+							"origin": [0, 14, -6],
+							"size": [0, 18, 12],
+							"pivot": [0, 23, 0],
+							"rotation": [0, 45, 0],
+							"uv": {
+								"east": {"uv": [4.25, 0.25], "uv_size": [2.5, 4.5]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
