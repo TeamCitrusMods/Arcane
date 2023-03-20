@@ -31,7 +31,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -67,12 +66,12 @@ public class GlassJarBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new GlassJarBlockEntity(pos, state);
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
             if(!(player.getItemInHand(hand).getItem() == Items.CANDLE)) {
                 return jar.use(level, pos, state, player, hand, player.getItemInHand(hand));
@@ -126,7 +125,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         Direction direction = getConnectedDirection(state).getOpposite();
         if(direction == Direction.UP) {
-            return Block.canSupportCenter(level, pos.relative(direction).above(2), direction.getOpposite());
+            return Block.canSupportCenter(level, pos.relative(direction).above(1), direction.getOpposite());
         }
         return Block.canSupportCenter(level, pos.relative(direction), direction.getOpposite());
     }
@@ -138,6 +137,16 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public BlockState updateShape(BlockState oldState, Direction direction, BlockState newState, LevelAccessor level, BlockPos newPos, BlockPos oldPos) {
         return getConnectedDirection(oldState).getOpposite() == direction && !oldState.canSurvive(level, newPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(oldState, direction, newState, level, newPos, oldPos);
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if(!level.isClientSide() && state.getValue(HANGING)) {
+            if(level.getBlockState(pos.above()).getBlock() != Blocks.AIR) {
+                level.destroyBlock(pos, true);
+            }
+        }
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
     }
 
     @Override
