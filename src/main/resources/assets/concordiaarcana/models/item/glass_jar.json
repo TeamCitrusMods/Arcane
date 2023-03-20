@@ -1,7 +1,5 @@
 {
   "credit": "Made by ElysiaSilly :D, Praise the Axolotl!",
-  "parent": "builtin/entity",
-  "gui_light": "front",
   "display": {
     "gui": {
       "rotation": [
