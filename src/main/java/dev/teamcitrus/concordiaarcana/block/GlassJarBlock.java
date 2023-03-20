@@ -1,6 +1,7 @@
 package dev.teamcitrus.concordiaarcana.block;
 
 import dev.teamcitrus.concordiaarcana.blockentity.GlassJarBlockEntity;
+import dev.teamcitrus.concordiaarcana.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -50,7 +51,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
     private static final VoxelShape CANDLED_SHAPE = Stream.of(
             Block.box(3, 0, 3, 13, 14, 13),
             Block.box(5, 14, 5, 11, 16, 11),
-            Block.box(6, 16, 6, 9, 23, 9)
+            Block.box(7, 16, 7, 9, 25, 9)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     public GlassJarBlock(Properties properties) {
@@ -73,9 +74,9 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
-            if(!(player.getItemInHand(hand).getItem() == Items.CANDLE)) {
+            if(!(player.getItemInHand(hand).getItem() == Items.CANDLE) && !(player.getItemInHand(hand).getItem() == ModItems.CORK.get())) {
                 return jar.use(level, pos, state, player, hand, player.getItemInHand(hand));
-            } else {
+            } else if (player.getItemInHand(hand).getItem() == Items.CANDLE) {
                 if(state.getValue(CORKED) && !state.getValue(HAS_CANDLE)) {
                     ItemStack stack = player.getItemInHand(hand);
                     if (!player.isCreative()) {
@@ -83,6 +84,12 @@ public class GlassJarBlock extends Block implements EntityBlock {
                     }
                     level.setBlockAndUpdate(pos, state.setValue(HAS_CANDLE, true));
                     return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+            } else if (player.getItemInHand(hand).getItem() == ModItems.CORK.get()) {
+                if(!level.getBlockState(pos).getValue(GlassJarBlock.CORKED)) {
+                    BlockState newState = level.getBlockState(pos).setValue(GlassJarBlock.CORKED, true);
+                    level.setBlockAndUpdate(pos, newState);
+                    return InteractionResult.SUCCESS;
                 }
             }
         }

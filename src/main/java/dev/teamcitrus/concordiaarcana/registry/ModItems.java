@@ -1,10 +1,8 @@
 package dev.teamcitrus.concordiaarcana.registry;
 
 import dev.teamcitrus.concordiaarcana.ConcordiaArcanaMod;
-import dev.teamcitrus.concordiaarcana.item.CorkItem;
 import dev.teamcitrus.concordiaarcana.item.GlassJarItem;
 import dev.teamcitrus.concordiaarcana.item.JournalItem;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -16,7 +14,7 @@ public class ModItems {
     public static final RegistryObject<Item> GLASS_JAR_ITEM = ITEMS.register("glass_jar", () -> new GlassJarItem(ModBlocks.GLASS_JAR.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", () -> new JournalItem(new Item.Properties()));
-    public static final RegistryObject<Item> CORK = ITEMS.register("cork", () -> new CorkItem(new Item.Properties()));
+    public static final RegistryObject<Item> CORK = ITEMS.register("cork", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ROSE_QUARTZ = ITEMS.register("rose_quartz", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SELENITE = ITEMS.register("selenite", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> TIGERS_EYE = ITEMS.register("tigers_eye", () -> new Item(new Item.Properties()));
