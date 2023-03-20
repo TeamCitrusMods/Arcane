@@ -1,6 +1,5 @@
 package dev.teamcitrus.arcane.capability.aura;
 
-import dev.teamcitrus.arcane.capability.mana.ISanityCapability;
 import dev.teamcitrus.arcane.registry.ModCapabilities;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AuraCapability implements IAuraCapability {
-    private int aura;
+    private int aura = 100;
 
     @Override
     public int getAura() {
@@ -35,7 +34,7 @@ public class AuraCapability implements IAuraCapability {
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putInt("aura", getAura());
-        return null;
+        return tag;
     }
 
     @Override
