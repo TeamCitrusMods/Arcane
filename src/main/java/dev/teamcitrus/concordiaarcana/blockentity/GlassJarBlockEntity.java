@@ -1,8 +1,8 @@
 package dev.teamcitrus.concordiaarcana.blockentity;
 
-import dev.teamcitrus.concordiaarcana.ConcordiaArcanaMod;
 import dev.teamcitrus.concordiaarcana.block.GlassJarBlock;
 import dev.teamcitrus.concordiaarcana.registry.ModBlockEntities;
+import dev.teamcitrus.concordiaarcana.registry.ModItems;
 import dev.teamcitrus.concordiaarcana.util.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,8 +56,8 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public InteractionResult use(Level levelAccessor, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!state.getValue(GlassJarBlock.CORKED)) {
-                if (!player.isCrouching()) {
+            if (!player.isCrouching()) {
+                if (!state.getValue(GlassJarBlock.CORKED)) {
                     if (!heldItem.isEmpty()) {
                         ItemStack heldCopy = heldItem.copy();
                         heldCopy.setCount(1);
@@ -69,8 +69,14 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
                             return InteractionResult.sidedSuccess(level.isClientSide);
                         }
                     }
-                } else {
-                    if (heldItem.isEmpty()) {
+                }
+            } else {
+                if (heldItem.isEmpty()) {
+                    if (!state.getValue(GlassJarBlock.SEALED) && state.getValue(GlassJarBlock.CORKED)) {
+                        level.setBlockAndUpdate(pos, state.setValue(GlassJarBlock.CORKED, false));
+                        dropItem(new ItemStack(ModItems.CORK.get()), 1f);
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else {
                         if (!InventoryUtil.isEmpty(inventory)) {
                             ItemStack lastStack = InventoryUtil.getLastStack(inventory);
                             if (!lastStack.isEmpty()) {
