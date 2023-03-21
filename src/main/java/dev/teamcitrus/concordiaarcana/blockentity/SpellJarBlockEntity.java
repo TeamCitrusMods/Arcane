@@ -1,6 +1,6 @@
 package dev.teamcitrus.concordiaarcana.blockentity;
 
-import dev.teamcitrus.concordiaarcana.block.GlassJarBlock;
+import dev.teamcitrus.concordiaarcana.block.SpellJarBlock;
 import dev.teamcitrus.concordiaarcana.registry.ModBlockEntities;
 import dev.teamcitrus.concordiaarcana.registry.ModItems;
 import dev.teamcitrus.concordiaarcana.util.InventoryUtil;
@@ -32,7 +32,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
 
-public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
+public class SpellJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final ItemStackHandler inventory = new ItemStackHandler(3) {
         @Override
         protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
@@ -46,18 +46,18 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     private static final RawAnimation SWING_ANIMATION = RawAnimation.begin().thenLoop("animation.jar.swing");
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.jar.idle");
 
-    public GlassJarBlockEntity(BlockEntityType<?> blockEntity, BlockPos pos, BlockState state) {
+    public SpellJarBlockEntity(BlockEntityType<?> blockEntity, BlockPos pos, BlockState state) {
         super(blockEntity, pos, state);
     }
 
-    public GlassJarBlockEntity(BlockPos pos, BlockState state) {
-        this(ModBlockEntities.GLASS_JAR.get(), pos, state);
+    public SpellJarBlockEntity(BlockPos pos, BlockState state) {
+        this(ModBlockEntities.SPELL_JAR.get(), pos, state);
     }
 
     public InteractionResult use(Level levelAccessor, BlockPos pos, BlockState state, Player player, InteractionHand hand, ItemStack heldItem) {
         if (hand == InteractionHand.MAIN_HAND) {
             if (!player.isCrouching()) {
-                if (!state.getValue(GlassJarBlock.CORKED)) {
+                if (!state.getValue(SpellJarBlock.CORKED)) {
                     if (!heldItem.isEmpty()) {
                         ItemStack heldCopy = heldItem.copy();
                         heldCopy.setCount(1);
@@ -72,8 +72,8 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
                 }
             } else {
                 if (heldItem.isEmpty()) {
-                    if (!state.getValue(GlassJarBlock.SEALED) && state.getValue(GlassJarBlock.CORKED)) {
-                        level.setBlockAndUpdate(pos, state.setValue(GlassJarBlock.CORKED, false));
+                    if (!state.getValue(SpellJarBlock.SEALED) && state.getValue(SpellJarBlock.CORKED)) {
+                        level.setBlockAndUpdate(pos, state.setValue(SpellJarBlock.CORKED, false));
                         dropItem(new ItemStack(ModItems.CORK.get()), 1f);
                         return InteractionResult.sidedSuccess(level.isClientSide);
                     } else {
@@ -111,7 +111,7 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     protected static Direction getConnectedDirection(BlockState state) {
-        return state.getValue(GlassJarBlock.HANGING) ? Direction.DOWN : Direction.UP;
+        return state.getValue(SpellJarBlock.HANGING) ? Direction.DOWN : Direction.UP;
     }
 
     @Override
@@ -140,7 +140,7 @@ public class GlassJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, state -> {
-            if(getLevel().getBlockState(getBlockPos()).getBlock() instanceof GlassJarBlock && getLevel().getBlockState(getBlockPos()).getValue(GlassJarBlock.HANGING)) {
+            if(getLevel().getBlockState(getBlockPos()).getBlock() instanceof SpellJarBlock && getLevel().getBlockState(getBlockPos()).getValue(SpellJarBlock.HANGING)) {
                 return state.setAndContinue(SWING_ANIMATION);
             } else {
                 return state.setAndContinue(IDLE);

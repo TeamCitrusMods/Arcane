@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ConcordiaArcanaMod.MODID);
 
-    public static final RegistryObject<Item> GLASS_JAR_ITEM = ITEMS.register("glass_jar", () -> new GlassJarItem(ModBlocks.GLASS_JAR.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SPELL_JAR_ITEM = ITEMS.register("spell_jar", () -> new GlassJarItem(ModBlocks.SPELL_JAR.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> JOURNAL = ITEMS.register("journal", () -> new JournalItem(new Item.Properties()));
     public static final RegistryObject<Item> CORK = ITEMS.register("cork", () -> new Item(new Item.Properties()));

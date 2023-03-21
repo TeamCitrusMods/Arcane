@@ -1,6 +1,6 @@
 package dev.teamcitrus.concordiaarcana.block;
 
-import dev.teamcitrus.concordiaarcana.blockentity.GlassJarBlockEntity;
+import dev.teamcitrus.concordiaarcana.blockentity.SpellJarBlockEntity;
 import dev.teamcitrus.concordiaarcana.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-public class GlassJarBlock extends Block implements EntityBlock {
+public class SpellJarBlock extends Block implements EntityBlock {
     public static final BooleanProperty CORKED = BooleanProperty.create("corked");
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
     public static final BooleanProperty HAS_CANDLE = BooleanProperty.create("has_candle");
@@ -54,7 +54,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
             Block.box(7, 16, 7, 9, 25, 9)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-    public GlassJarBlock(Properties properties) {
+    public SpellJarBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(CORKED, false)
@@ -68,12 +68,12 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new GlassJarBlockEntity(pos, state);
+        return new SpellJarBlockEntity(pos, state);
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
+        if (level.getBlockEntity(pos) instanceof SpellJarBlockEntity jar) {
             if(!(player.getItemInHand(hand).getItem() == Items.CANDLE) && !(player.getItemInHand(hand).getItem() == ModItems.CORK.get())) {
                 return jar.use(level, pos, state, player, hand, player.getItemInHand(hand));
             } else if (player.getItemInHand(hand).getItem() == Items.CANDLE) {
@@ -86,8 +86,8 @@ public class GlassJarBlock extends Block implements EntityBlock {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             } else if (player.getItemInHand(hand).getItem() == ModItems.CORK.get()) {
-                if(!level.getBlockState(pos).getValue(GlassJarBlock.CORKED)) {
-                    BlockState newState = level.getBlockState(pos).setValue(GlassJarBlock.CORKED, true);
+                if(!level.getBlockState(pos).getValue(SpellJarBlock.CORKED)) {
+                    BlockState newState = level.getBlockState(pos).setValue(SpellJarBlock.CORKED, true);
                     level.setBlockAndUpdate(pos, newState);
                     return InteractionResult.SUCCESS;
                 }
@@ -100,7 +100,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if(!level.isClientSide()) {
-            if(level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
+            if(level.getBlockEntity(pos) instanceof SpellJarBlockEntity jar) {
                 jar.onBreak();
             }
         }
@@ -180,7 +180,7 @@ public class GlassJarBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> beType) {
         if(state.getValue(HANGING)) {
-            return GlassJarBlockEntity::tick;
+            return SpellJarBlockEntity::tick;
         }
         return null;
     }

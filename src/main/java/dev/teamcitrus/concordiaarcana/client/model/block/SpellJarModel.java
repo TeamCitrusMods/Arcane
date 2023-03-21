@@ -1,14 +1,14 @@
 package dev.teamcitrus.concordiaarcana.client.model.block;
 
 import dev.teamcitrus.concordiaarcana.ConcordiaArcanaMod;
-import dev.teamcitrus.concordiaarcana.block.GlassJarBlock;
-import dev.teamcitrus.concordiaarcana.blockentity.GlassJarBlockEntity;
+import dev.teamcitrus.concordiaarcana.block.SpellJarBlock;
+import dev.teamcitrus.concordiaarcana.blockentity.SpellJarBlockEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.model.DefaultedBlockGeoModel;
 
-public class GlassJarModel extends DefaultedBlockGeoModel<GlassJarBlockEntity> {
+public class SpellJarModel extends DefaultedBlockGeoModel<SpellJarBlockEntity> {
     private final ResourceLocation BASE_MODEL_OPEN = buildFormattedModelPath(new ResourceLocation(ConcordiaArcanaMod.MODID, "jar_floor_open"));
     private final ResourceLocation BASE_MODEL_CORKED = buildFormattedModelPath(new ResourceLocation(ConcordiaArcanaMod.MODID, "jar_floor_corked"));
     private final ResourceLocation BASE_MODEL_CANDLE = buildFormattedModelPath(new ResourceLocation(ConcordiaArcanaMod.MODID, "jar_floor_candled"));
@@ -17,23 +17,23 @@ public class GlassJarModel extends DefaultedBlockGeoModel<GlassJarBlockEntity> {
     private final ResourceLocation HANGING_MODEL_CORKED = buildFormattedModelPath(new ResourceLocation(ConcordiaArcanaMod.MODID, "jar_hanging_corked"));
     private final ResourceLocation HANGING_MODEL_CANDLED = buildFormattedModelPath(new ResourceLocation(ConcordiaArcanaMod.MODID, "jar_hanging_candled"));
 
-    private final ResourceLocation UNLIT_TEXTURE = buildFormattedTexturePath(new ResourceLocation(ConcordiaArcanaMod.MODID, "glass_jar_unlit"));
-    private final ResourceLocation LIT_TEXTURE = buildFormattedTexturePath(new ResourceLocation(ConcordiaArcanaMod.MODID, "glass_jar_lit"));
+    private final ResourceLocation UNLIT_TEXTURE = buildFormattedTexturePath(new ResourceLocation(ConcordiaArcanaMod.MODID, "spell_jar_unlit"));
+    private final ResourceLocation LIT_TEXTURE = buildFormattedTexturePath(new ResourceLocation(ConcordiaArcanaMod.MODID, "spell_jar_lit"));
 
     private final ResourceLocation BASE_MODEL_SWING = buildFormattedAnimationPath(new ResourceLocation(ConcordiaArcanaMod.MODID, "jar_swing"));
 
-    public GlassJarModel() {
-        super(new ResourceLocation(ConcordiaArcanaMod.MODID, "glass_jar"));
+    public SpellJarModel() {
+        super(new ResourceLocation(ConcordiaArcanaMod.MODID, "spell_jar"));
     }
 
     @Override
-    public ResourceLocation getAnimationResource(GlassJarBlockEntity animatable) {
+    public ResourceLocation getAnimationResource(SpellJarBlockEntity animatable) {
         return BASE_MODEL_SWING;
     }
 
     @Override
-    public ResourceLocation getModelResource(GlassJarBlockEntity animatable) {
-        if (animatable.getLevel().getBlockState(animatable.getBlockPos()).getBlock() instanceof GlassJarBlock) {
+    public ResourceLocation getModelResource(SpellJarBlockEntity animatable) {
+        if (animatable.getLevel().getBlockState(animatable.getBlockPos()).getBlock() instanceof SpellJarBlock) {
             if (!isHanging(animatable)) {
                 if (isCandled(animatable)) {
                     return BASE_MODEL_CANDLE;
@@ -56,8 +56,8 @@ public class GlassJarModel extends DefaultedBlockGeoModel<GlassJarBlockEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureResource(GlassJarBlockEntity animatable) {
-        if(animatable.getLevel().getBlockState(animatable.getBlockPos()).getBlock() instanceof GlassJarBlock) {
+    public ResourceLocation getTextureResource(SpellJarBlockEntity animatable) {
+        if(animatable.getLevel().getBlockState(animatable.getBlockPos()).getBlock() instanceof SpellJarBlock) {
             if(isLit(animatable)) {
                 return LIT_TEXTURE;
             }
@@ -66,27 +66,27 @@ public class GlassJarModel extends DefaultedBlockGeoModel<GlassJarBlockEntity> {
     }
 
     @Override
-    public RenderType getRenderType(GlassJarBlockEntity animatable, ResourceLocation texture) {
+    public RenderType getRenderType(SpellJarBlockEntity animatable, ResourceLocation texture) {
         return RenderType.entityTranslucent(getTextureResource(animatable));
     }
 
-    private BlockState getState(GlassJarBlockEntity block) {
+    private BlockState getState(SpellJarBlockEntity block) {
         return block.getLevel().getBlockState(block.getBlockPos());
     }
 
-    private boolean isHanging(GlassJarBlockEntity block) {
-        return getState(block).getValue(GlassJarBlock.HANGING);
+    private boolean isHanging(SpellJarBlockEntity block) {
+        return getState(block).getValue(SpellJarBlock.HANGING);
     }
 
-    private boolean isCorked(GlassJarBlockEntity block) {
-        return getState(block).getValue(GlassJarBlock.CORKED);
+    private boolean isCorked(SpellJarBlockEntity block) {
+        return getState(block).getValue(SpellJarBlock.CORKED);
     }
 
-    private boolean isCandled(GlassJarBlockEntity block) {
-        return getState(block).getValue(GlassJarBlock.HAS_CANDLE);
+    private boolean isCandled(SpellJarBlockEntity block) {
+        return getState(block).getValue(SpellJarBlock.HAS_CANDLE);
     }
 
-    private boolean isLit(GlassJarBlockEntity block) {
-        return getState(block).getValue(GlassJarBlock.LIT);
+    private boolean isLit(SpellJarBlockEntity block) {
+        return getState(block).getValue(SpellJarBlock.LIT);
     }
 }

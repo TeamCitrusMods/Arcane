@@ -1,6 +1,7 @@
 package dev.teamcitrus.concordiaarcana.item;
 
-import dev.teamcitrus.concordiaarcana.block.GlassJarBlock;
+import dev.teamcitrus.concordiaarcana.ConcordiaArcanaMod;
+import dev.teamcitrus.concordiaarcana.block.SpellJarBlock;
 import dev.teamcitrus.concordiaarcana.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,11 +22,13 @@ public class GlassJarItem extends BlockItem {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Direction direction = context.getClickedFace();
-        BlockState state = ModBlocks.GLASS_JAR.get().defaultBlockState();
+        BlockState state = ModBlocks.SPELL_JAR.get().defaultBlockState();
 
         if (direction == Direction.DOWN) {
-            level.setBlockAndUpdate(pos.below(), state.setValue(GlassJarBlock.HANGING, true));
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            if(Block.canSupportCenter(level, pos.above(), direction)) {
+                level.setBlockAndUpdate(pos.below(), state.setValue(SpellJarBlock.HANGING, true));
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
         }
 
         return super.place(context);

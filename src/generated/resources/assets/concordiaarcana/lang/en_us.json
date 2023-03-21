@@ -1,5 +1,5 @@
 {
-  "block.concordiaarcana.glass_jar": "Glass Jar",
+  "block.concordiaarcana.spell_jar": "Spell Jar",
   "book.concordiaarcana.concordiaarcana.name": "The Journal",
   "book.concordiaarcana.concordiaarcana.tooltip": "1st Edition",
   "item.concordiaarcana.bay_leaves": "Bay Leaves",
@@ -8,7 +8,7 @@
   "item.concordiaarcana.cinnamon": "Cinnamon",
   "item.concordiaarcana.cork": "Cork",
   "item.concordiaarcana.garlic_powder": "Garlic Powder",
-  "item.concordiaarcana.himalayan_salt": "Himalayan Salt",
+  "item.concordiaarcana.himalayan_salt": "Pink Rocksalt",
   "item.concordiaarcana.journal": "The Journal",
   "item.concordiaarcana.labradorite": "Labradorite",
   "item.concordiaarcana.mint": "Mint",
