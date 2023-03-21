@@ -16,7 +16,7 @@ public class ArcaneItemProvider extends ItemModelProvider {
         basicItem(ModItems.CORK.get());
         basicItem(ModItems.BLACK_PEPPER.get());
         basicItem(ModItems.CINNAMON.get());
-        basicItem(ModItems.HIMALAYAN_SALT.get());
+        basicItem(ModItems.PINK_ROCKSALT.get());
         basicItem(ModItems.LABRADORITE.get());
         basicItem(ModItems.PYRITE.get());
         basicItem(ModItems.ROSE_QUARTZ.get());

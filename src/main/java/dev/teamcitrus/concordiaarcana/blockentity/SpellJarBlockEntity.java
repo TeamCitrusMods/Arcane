@@ -140,7 +140,7 @@ public class SpellJarBlockEntity extends BlockEntity implements GeoBlockEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, state -> {
-            if(getLevel().getBlockState(getBlockPos()).getBlock() instanceof SpellJarBlock && getLevel().getBlockState(getBlockPos()).getValue(SpellJarBlock.HANGING)) {
+            if(state.getAnimatable().getBlockState().getValue(SpellJarBlock.HANGING)) {
                 return state.setAndContinue(SWING_ANIMATION);
             } else {
                 return state.setAndContinue(IDLE);

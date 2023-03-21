@@ -28,7 +28,7 @@ public class EnUsProvider extends LanguageProvider {
         add(ModItems.SMOKEY_QUARTZ.get(), "Smokey Quartz");
         add(ModItems.ROSEMARY.get(), "Rosemary");
         add(ModItems.SALT.get(), "Salt");
-        add(ModItems.HIMALAYAN_SALT.get(), "Pink Rocksalt");
+        add(ModItems.PINK_ROCKSALT.get(), "Pink Rocksalt");
         add(ModItems.BLACK_PEPPER.get(), "Black Pepper");
         add(ModItems.CINNAMON.get(), "Cinnamon");
         add(ModItems.GARLIC_POWDER.get(), "Garlic Powder");

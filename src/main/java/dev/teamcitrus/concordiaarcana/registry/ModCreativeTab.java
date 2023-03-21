@@ -13,7 +13,7 @@ public class ModCreativeTab {
     @SubscribeEvent
     public static void registerCreativeTabs(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(ConcordiaArcanaMod.MODID, "tab"), builder -> builder.title(Component.translatable("itemGroup.concordiaarcana"))
-                .icon(() -> new ItemStack(ModItems.HIMALAYAN_SALT.get()))
+                .icon(() -> new ItemStack(ModItems.PINK_ROCKSALT.get()))
                 .displayItems((feature, output, hasPerm) -> ModItems.ITEMS.getEntries().forEach(i -> output.accept(i.get()))));
     }
 }

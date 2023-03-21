@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "concordiaarcana:item/himalayan_salt"
+    "layer0": "concordiaarcana:item/pink_rocksalt"
   }
 }

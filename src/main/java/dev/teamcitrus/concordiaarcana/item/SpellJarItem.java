@@ -1,6 +1,5 @@
 package dev.teamcitrus.concordiaarcana.item;
 
-import dev.teamcitrus.concordiaarcana.ConcordiaArcanaMod;
 import dev.teamcitrus.concordiaarcana.block.SpellJarBlock;
 import dev.teamcitrus.concordiaarcana.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -12,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class GlassJarItem extends BlockItem {
-    public GlassJarItem(Block block, Properties properties) {
+public class SpellJarItem extends BlockItem {
+    public SpellJarItem(Block block, Properties properties) {
         super(block, properties);
     }
 
