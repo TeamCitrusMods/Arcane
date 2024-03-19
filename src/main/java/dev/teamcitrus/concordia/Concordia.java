@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(Concordia.MODID)
 public class Concordia {
-    public static final String MODID = "examplemod";
+    public static final String MODID = "concordia";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public Concordia() {

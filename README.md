@@ -1,2 +1,2 @@
-# Concordia Arcana
-Our Witchery Mod in Production
+# Concordia
+Something something, magic?
